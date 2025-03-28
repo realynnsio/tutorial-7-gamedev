@@ -7,6 +7,7 @@ extends CharacterBody3D
 @export var mouse_sensitivity: float = 0.3
 @onready var camera: Camera3D = $Head/Camera3D
 var head_position = 0.507
+var speed_mult = 1
 
 var camera_x_rotation: float = 0.0
 @onready var head: Node3D = $Head
@@ -37,22 +38,24 @@ func _physics_process(delta):
 		movement_vector += head.basis.x
 
 	movement_vector = movement_vector.normalized()
-
+	
 	# Run, Crouch, Walk
 	if Input.is_key_pressed(KEY_SHIFT):
-		velocity.x = lerp(velocity.x, movement_vector.x * 4 * speed, acceleration * delta)
-		velocity.z = lerp(velocity.z, movement_vector.z * 4 * speed, acceleration * delta)
+		speed_mult = 4
 	elif Input.is_key_pressed(KEY_CTRL):
-		velocity.x = lerp(velocity.x, movement_vector.x * 0.3 * speed, acceleration * delta)
-		velocity.z = lerp(velocity.z, movement_vector.z * 0.3 * speed, acceleration * delta)
+		speed_mult = 0.3
 	else:
-		velocity.x = lerp(velocity.x, movement_vector.x * speed, acceleration * delta)
-		velocity.z = lerp(velocity.z, movement_vector.z * speed, acceleration * delta)
+		speed_mult = 1
+		
+	velocity.x = lerp(velocity.x, movement_vector.x * speed_mult * speed, acceleration * delta)
+	velocity.z = lerp(velocity.z, movement_vector.z * speed_mult * speed, acceleration * delta)
 	
-	if Input.is_key_pressed(KEY_CTRL):
+	# Head position
+	if Input.is_key_pressed(KEY_CTRL) && !Input.is_key_pressed(KEY_SHIFT):
 		head.position.y = head_position - 0.5
 	else:
 		head.position.y = head_position
+		
 	# Apply gravity
 	if not is_on_floor():
 		velocity.y -= gravity * delta
