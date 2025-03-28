@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8br6n361oigk"]
+
+[ext_resource type="PackedScene" uid="uid://drqk7vrchcikv" path="res://scenes/Player.tscn" id="1_t7hpj"]
+[ext_resource type="PackedScene" uid="uid://0gnud86so5o7" path="res://scenes/World1.tscn" id="2_xm4qc"]
+[ext_resource type="PackedScene" uid="uid://drb4w63vvt34k" path="res://scenes/AreaTrigger.tscn" id="3_yiyvt"]
+
+[node name="Level 1" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("1_t7hpj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1, 6)
+
+[node name="World 1" parent="." instance=ExtResource("2_xm4qc")]
+
+[node name="Win Trigger" parent="." instance=ExtResource("3_yiyvt")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+sceneName = "WinScreen"
+
+[node name="Lose Trigger" parent="." instance=ExtResource("3_yiyvt")]
+transform = Transform3D(11, 0, 0, 0, 11, 0, 0, 0, 11, 16.306, -8.7012, 6.2345)
+
+[node name="Lose Trigger2" parent="." instance=ExtResource("3_yiyvt")]
+transform = Transform3D(12, 0, 0, 0, 12, 0, 0, 0, 12, 16.306, -9.7012, -4.25533)
